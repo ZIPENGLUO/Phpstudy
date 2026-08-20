@@ -31,4 +31,28 @@ class TaskController extends Controller
             'data' => $task,
         ], 201);
     }
+
+    public function complete(Task $task)
+    {
+        $task->update([
+            'is_completed' => true,
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Task completed successfully',
+            'data' => $task,
+        ]);
+    }
+   public function update(Request $request, Task $task)
+    {
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+        $task->update($data);
+        return response()->json([
+            'success' => true,
+            'message' => 'Task updated successfully',
+            'data' => $task,
+        ]);
+    }
 }
